@@ -1185,12 +1185,12 @@
           <label>Project Type</label>
           <select id="projectType">
             <option value="" disabled selected>Select type...</option>
-            <option>Insurance / Storm Damage</option>
-            <option>Roof Replacement</option>
-            <option>Siding</option>
-            <option>Windows & Doors</option>
-            <option>Gutters</option>
-            <option>Commercial</option>
+            <option value="Insurance">Insurance / Storm Damage</option>
+            <option value="Retail">Roof Replacement</option>
+            <option value="Retail">Siding</option>
+            <option value="Retail">Windows & Doors</option>
+            <option value="Retail">Gutters</option>
+            <option value="Commercial">Commercial</option>
           </select>
         </div>
         <div class="form-field">
@@ -1287,14 +1287,6 @@
     btn.textContent = 'Submitting...';
 
     const stateMap = { 'New Jersey': 'NJ', 'Delaware': 'DE', 'Pennsylvania': 'PA' };
-    const divisionMap = {
-      'Insurance / Storm Damage': 'Insurance',
-      'Roof Replacement': 'Retail',
-      'Siding': 'Retail',
-      'Windows & Doors': 'Retail',
-      'Gutters': 'Retail',
-      'Commercial': 'Commercial'
-    };
 
     const { error } = await sb.from('leads').insert([{
       name: [firstName, lastName].filter(Boolean).join(' '),
@@ -1303,7 +1295,7 @@
       address: address || null,
       city: '',
       state: stateMap[state] || null,
-      division: divisionMap[projectType] || null,
+      division: projectType || null,
       notes: notes || null,
       source: 'Web Lead',
       stage: 'new'
