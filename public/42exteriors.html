@@ -1311,6 +1311,9 @@
 
     if (error) {
       console.error('Supabase insert error:', error);
+      console.error('message:', error.message);
+      console.error('details:', error.details);
+      console.error('hint:', error.hint);
       showMsg('Something went wrong. Please call us directly.', 'error');
       btn.disabled = false;
       btn.textContent = 'Request Free Inspection →';
