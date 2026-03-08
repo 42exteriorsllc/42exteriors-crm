@@ -467,18 +467,27 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 100px;
-    align-items: center;
+    align-items: stretch;
   }
 
   .storm-visual {
     position: relative;
-    height: 600px;
+    align-self: stretch;
+    min-height: 500px;
   }
 
   .storm-img {
     position: absolute;
     inset: 0;
     overflow: hidden;
+  }
+
+  .storm-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 
   .storm-img-frame {
@@ -1034,7 +1043,7 @@
 <section id="storm">
   <div class="storm-visual reveal">
     <div class="storm-img">
-      <img src="/storm-inspection.jpg" alt="Storm damage inspection" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:brightness(0.85);">
+      <img src="/storm-inspection.jpg" alt="Storm damage inspection">
     </div>
     <div class="storm-img-frame"></div>
     <div class="storm-badge">
