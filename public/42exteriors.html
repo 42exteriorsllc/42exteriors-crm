@@ -478,8 +478,7 @@
   .storm-img {
     position: absolute;
     inset: 0;
-    background: url('https://images.unsplash.com/photo-1504322566390-9c2e7ac71e05?w=700&q=80') center/cover;
-    filter: brightness(0.5) saturate(0.8);
+    overflow: hidden;
   }
 
   .storm-img-frame {
@@ -1034,7 +1033,9 @@
 <!-- INSURANCE STORM -->
 <section id="storm">
   <div class="storm-visual reveal">
-    <div class="storm-img"></div>
+    <div class="storm-img">
+      <img src="/storm-inspection.jpg" alt="Storm damage inspection" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:brightness(0.85);">
+    </div>
     <div class="storm-img-frame"></div>
     <div class="storm-badge">
       <div class="storm-badge-num">$0</div>
