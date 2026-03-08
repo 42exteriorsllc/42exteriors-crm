@@ -10,14 +10,11 @@ const FROM_EMAIL = Deno.env.get('FROM_EMAIL')!
 
 serve(async (req) => {
   try {
-    const payload = await req.json()
+    const rawBody = await req.text()
+    console.log('Raw request body:', rawBody)
+    const payload = JSON.parse(rawBody)
 
-    // Supabase database webhooks send { type, table, record, old_record }
-    if (payload.type !== 'INSERT') {
-      return new Response('Ignored', { status: 200 })
-    }
-
-    const lead = payload.record
+    const lead = payload
     const {
       name = 'Unknown',
       phone = 'N/A',
@@ -74,9 +71,10 @@ async function sendSMS(body: string) {
     }),
   })
 
+  const twilioText = await res.text()
+  console.log('Twilio response:', res.status, twilioText)
   if (!res.ok) {
-    const text = await res.text()
-    throw new Error(`Twilio error ${res.status}: ${text}`)
+    throw new Error(`Twilio error ${res.status}: ${twilioText}`)
   }
 }
 
@@ -112,8 +110,9 @@ async function sendEmail(lead: {
     }),
   })
 
+  const resendText = await res.text()
+  console.log('Resend response:', res.status, resendText)
   if (!res.ok) {
-    const text = await res.text()
-    throw new Error(`Resend error ${res.status}: ${text}`)
+    throw new Error(`Resend error ${res.status}: ${resendText}`)
   }
 }

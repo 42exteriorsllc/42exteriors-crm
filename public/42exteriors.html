@@ -287,7 +287,7 @@
     inset: 0;
     background:
       linear-gradient(135deg, rgba(201,168,76,0.03) 0%, transparent 60%),
-      url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80') center/cover no-repeat;
+      url('https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=1400&q=80') center/cover no-repeat;
     filter: brightness(0.35) contrast(1.1);
     transform: scale(1.05);
     animation: slowZoom 12s ease-out forwards;
@@ -924,7 +924,7 @@
       <em>Impress.</em>
     </h1>
     <div class="hero-divider"></div>
-    <p class="hero-sub">From insurance storm claims to premium home renovations — 42 Exteriors delivers exceptional craftsmanship across New Jersey, Delaware, and Pennsylvania.</p>
+    <p class="hero-sub">From insurance storm claims to premium home renovations — 42 Exteriors delivers exceptional craftsmanship across New Jersey, Delaware, Pennsylvania, and Maryland.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">Get Free Inspection</a>
       <a href="#storm" class="btn-ghost">Insurance Claim?</a>
@@ -933,6 +933,7 @@
       <span class="hero-state">New Jersey</span>
       <span class="hero-state">Delaware</span>
       <span class="hero-state">Pennsylvania</span>
+      <span class="hero-state">Maryland</span>
     </div>
   </div>
   <div class="hero-right">
@@ -1120,7 +1121,7 @@
 <section id="coverage">
   <div>
     <p class="section-label reveal">Service Area</p>
-    <h2 class="coverage-heading reveal">Serving the <em>Tri-State</em> Region</h2>
+    <h2 class="coverage-heading reveal">Serving the <em>Tri-State</em> Region & Maryland</h2>
   </div>
   <div class="coverage-states">
     <div class="coverage-state reveal">
@@ -1137,6 +1138,11 @@
       <div class="coverage-state-abbr">PA</div>
       <div class="coverage-state-name">Pennsylvania</div>
     </div>
+    <div class="coverage-divider"></div>
+    <div class="coverage-state reveal">
+      <div class="coverage-state-abbr">MD</div>
+      <div class="coverage-state-name">Maryland</div>
+    </div>
   </div>
 </section>
 
@@ -1148,7 +1154,7 @@
     <p>Whether you've experienced storm damage or you're ready to upgrade your home, our team is ready to help. Fill out the form and we'll be in touch within 2 business hours.</p>
     <div class="trust-items">
       <div class="trust-item">No obligation, 100% free inspection</div>
-      <div class="trust-item">Licensed & insured in NJ, DE & PA</div>
+      <div class="trust-item">Licensed & insured in NJ, DE, PA & MD</div>
       <div class="trust-item">Insurance claim specialists on staff</div>
       <div class="trust-item">Financing options available</div>
       <div class="trust-item">Manufacturer-certified installation crews</div>
@@ -1199,6 +1205,7 @@
             <option>New Jersey</option>
             <option>Delaware</option>
             <option>Pennsylvania</option>
+            <option>Maryland</option>
           </select>
         </div>
       </div>
@@ -1221,7 +1228,7 @@
         <span class="logo-number">42</span>
         <span class="logo-text">Exteriors</span>
       </a>
-      <p>Premium roofing and exterior solutions for homeowners and businesses across New Jersey, Delaware, and Pennsylvania. Built to endure. Crafted to impress.</p>
+      <p>Premium roofing and exterior solutions for homeowners and businesses across New Jersey, Delaware, Pennsylvania, and Maryland. Built to endure. Crafted to impress.</p>
     </div>
     <div>
       <div class="footer-col-title">Services</div>
@@ -1246,7 +1253,7 @@
     <div>
       <div class="footer-col-title">Contact</div>
       <ul class="footer-links">
-        <li><a href="#">(555) 000-0000</a></li>
+        <li><a href="tel:6093072444">(609) 307-2444</a></li>
         <li><a href="#">info@42exteriors.com</a></li>
         <li><a href="#">Free Inspection</a></li>
         <li><a href="#">Customer Portal</a></li>
@@ -1256,7 +1263,7 @@
   </div>
   <div class="footer-bottom">
     <p class="footer-copy">© 2025 42 Exteriors LLC. All rights reserved.</p>
-    <p class="footer-lic">Licensed in NJ · DE · PA &nbsp;|&nbsp; Fully Insured &nbsp;|&nbsp; Privacy Policy</p>
+    <p class="footer-lic">Licensed in NJ · DE · PA · MD &nbsp;|&nbsp; Fully Insured &nbsp;|&nbsp; Privacy Policy</p>
   </div>
 </footer>
 
@@ -1285,7 +1292,7 @@
     btn.disabled = true;
     btn.textContent = 'Submitting...';
 
-    const stateMap = { 'New Jersey': 'NJ', 'Delaware': 'DE', 'Pennsylvania': 'PA' };
+    const stateMap = { 'New Jersey': 'NJ', 'Delaware': 'DE', 'Pennsylvania': 'PA', 'Maryland': 'MD' };
 
     const { error } = await sb.from('leads').insert([{
       name: [firstName, lastName].filter(Boolean).join(' '),
