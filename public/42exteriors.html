@@ -482,19 +482,20 @@
     overflow: hidden;
   }
 
-  .storm-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-  }
 
   .storm-img-frame {
     position: absolute;
     inset: 20px 20px -20px -20px;
     border: 1px solid rgba(201,168,76,0.2);
-    z-index: 0;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .storm-img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 
   .storm-badge {
@@ -1042,10 +1043,10 @@
 <!-- INSURANCE STORM -->
 <section id="storm">
   <div class="storm-visual reveal">
-    <div class="storm-img">
+    <div class="storm-img"></div>
+    <div class="storm-img-frame">
       <img src="/storm-inspection.jpg" alt="Storm damage inspection">
     </div>
-    <div class="storm-img-frame"></div>
     <div class="storm-badge">
       <div class="storm-badge-num">$0</div>
       <div class="storm-badge-text">Out of Pocket*</div>
