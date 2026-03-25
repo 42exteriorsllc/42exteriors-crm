@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
+import EstimateBuilder from "./EstimateBuilder";
 
 const COLORS = {
   black: "#0a0a0a", charcoal: "#111111", graphite: "#1a1a1a", steel: "#222222",
@@ -77,6 +78,7 @@ export default function App() {
   const [view, setView] = useState("kanban");
   const [showModal, setShowModal] = useState(false);
   const [editLead, setEditLead] = useState(null);
+  const [estimateLead, setEstimateLead] = useState(null);
   const [form, setForm] = useState(emptyLead);
   const [filterDiv, setFilterDiv] = useState("All");
   const [filterState, setFilterState] = useState("All");
@@ -223,6 +225,11 @@ export default function App() {
         {lead.rep_initials&&<span style={s.tag(COLORS.silver)}>{lead.rep_initials}</span>}
         {lead.estimated_value?<span style={{...s.cardValue,marginLeft:"auto"}}>{fmt(lead.estimated_value)}</span>:null}
       </div>
+      <button
+        style={{background:COLORS.gold,color:COLORS.black,border:"none",padding:"5px 10px",fontSize:9,fontWeight:700,letterSpacing:2,textTransform:"uppercase",cursor:"pointer",marginTop:8,width:"100%"}}
+        onClick={e=>{e.stopPropagation();setEstimateLead(lead);}}>
+        Estimate
+      </button>
     </div>
   );
 
@@ -409,6 +416,25 @@ export default function App() {
               <button style={s.btnGhost} onClick={()=>setShowModal(false)}>Cancel</button>
               <button style={s.btnGold} onClick={saveForm} disabled={saving}>{saving?"Saving...":editLead?"Save Changes":"Add Lead"}</button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {estimateLead&&(
+        <div style={s.overlay} onClick={e=>e.target===e.currentTarget&&setEstimateLead(null)}>
+          <div style={{...s.modal,width:"min(780px,96vw)"}}>
+            <div style={s.modalHeader}>
+              <span style={s.modalTitle}>New Estimate — {estimateLead.name}</span>
+              <button style={s.modalClose} onClick={()=>setEstimateLead(null)}>×</button>
+            </div>
+            <EstimateBuilder
+              leadId={estimateLead.id}
+              leadName={estimateLead.name}
+              leadEmail={estimateLead.email}
+              leadPhone={estimateLead.phone}
+              leadAddress={estimateLead.address}
+              onSaved={()=>setEstimateLead(null)}
+            />
           </div>
         </div>
       )}
