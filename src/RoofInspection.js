@@ -68,6 +68,7 @@ export default function RoofInspection() {
       setError("Something went wrong. Please try again or call us directly.");
     } else {
       setSuccess(true);
+      if (window.fbq) { window.fbq('track', 'Lead'); }
     }
   };
 
