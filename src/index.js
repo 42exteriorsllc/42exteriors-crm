@@ -5,6 +5,7 @@ import './index.css';
 import Homepage from './Homepage';
 import App from './App';
 import Portal from './Portal';
+import RoofInspection from './RoofInspection';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,6 +16,7 @@ root.render(
         <Route path="/" element={<Homepage />} />
         <Route path="/crm" element={<App />} />
         <Route path="/portal" element={<Portal />} />
+        <Route path="/lp/roof-inspection" element={<RoofInspection />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
