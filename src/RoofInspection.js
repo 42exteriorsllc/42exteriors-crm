@@ -72,389 +72,111 @@ export default function RoofInspection() {
     }
   };
 
-  const s = {
-    page: {
-      background: COLORS.black,
-      color: COLORS.white,
-      fontFamily: "'Barlow', 'Helvetica Neue', sans-serif",
-      fontWeight: 300,
-    },
+  const scrollToForm = (e) => {
+    e.preventDefault();
+    document.getElementById("form")?.scrollIntoView({ behavior: "smooth" });
+  };
 
-    // ── HERO ────────────────────────────────────────────────
-    hero: {
-      minHeight: "100vh",
-      background: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-                   url('/images/roof-finished.jpg') center/cover no-repeat`,
-      display: "flex",
-      flexDirection: "column",
-      padding: mobile ? "0 20px" : "0 48px",
-    },
-    topbar: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: mobile ? "20px 0" : "28px 0",
-      borderBottom: "1px solid rgba(42,42,42,0.6)",
-    },
-    logoNum: {
-      fontFamily: "'Georgia', serif",
-      fontSize: mobile ? 24 : 30,
-      fontWeight: 700,
-      color: COLORS.gold,
-      letterSpacing: -1,
-    },
-    logoTxt: {
-      fontSize: mobile ? 11 : 13,
-      fontWeight: 600,
-      letterSpacing: 4,
-      color: COLORS.white,
-      textTransform: "uppercase",
-      paddingLeft: 7,
-    },
-    serviceArea: {
-      fontSize: mobile ? 10 : 12,
-      color: COLORS.silver,
-      letterSpacing: 2,
-    },
-    heroBody: {
-      flex: 1,
-      display: "flex",
-      flexDirection: mobile ? "column" : "row",
-      alignItems: mobile ? "flex-start" : "center",
-      justifyContent: "space-between",
-      gap: mobile ? 36 : 64,
-      paddingTop: mobile ? 40 : 88,
-      paddingBottom: mobile ? 48 : 88,
-    },
-    heroLeft: {
-      flex: 1,
-      maxWidth: mobile ? "100%" : 560,
-    },
-    pill: {
-      display: "inline-block",
-      background: COLORS.gold,
-      color: COLORS.black,
-      fontSize: mobile ? 11 : 12,
-      fontWeight: 700,
-      letterSpacing: 2,
-      textTransform: "uppercase",
-      padding: "6px 18px",
-      borderRadius: 100,
-      marginBottom: 24,
-    },
-    headline: {
-      fontFamily: "'Georgia', serif",
-      fontSize: "clamp(40px, 7vw, 68px)",
-      fontWeight: 700,
-      color: COLORS.white,
-      lineHeight: 1.1,
-      margin: "0 0 24px",
-    },
-    subhead: {
-      fontSize: "clamp(19px, 2.6vw, 24px)",
-      color: "#b0aba4",
-      lineHeight: 1.7,
-      margin: "0 0 36px",
-      fontWeight: 300,
-    },
-    bullets: { display: "flex", flexDirection: "column", gap: 16 },
-    bullet: {
-      display: "flex",
-      alignItems: "center",
-      gap: 12,
-      fontSize: mobile ? 17 : 19,
-      color: COLORS.white,
-      lineHeight: 1.5,
-    },
-    checkmark: {
-      color: COLORS.gold,
-      fontSize: 20,
-      fontWeight: 700,
-      flexShrink: 0,
-      lineHeight: 1,
-    },
+  /* ── inline form renderer (used in hero) ── */
+  const renderForm = () => {
+    if (success) {
+      return (
+        <div style={{ textAlign: "center", padding: "16px 0" }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            width: 56, height: 56, borderRadius: "50%",
+            background: `${COLORS.gold}22`, border: `1px solid ${COLORS.gold}`,
+            fontSize: 24, color: COLORS.gold, marginBottom: 16,
+          }}>&#10003;</div>
+          <div style={{ fontSize: 22, fontWeight: 600, color: COLORS.white, marginBottom: 10 }}>
+            Request received.
+          </div>
+          <div style={{ fontSize: 17, color: COLORS.silver, lineHeight: 1.7 }}>
+            Our team will reach out within one business day to schedule your free inspection.
+          </div>
+        </div>
+      );
+    }
 
-    // ── FORM CARD ────────────────────────────────────────────
-    formCard: {
-      background: COLORS.charcoal,
-      border: `1px solid ${COLORS.gold}`,
-      borderRadius: 4,
-      padding: mobile ? "28px 22px" : "36px 32px",
-      width: mobile ? "100%" : 400,
-      flexShrink: 0,
-      boxSizing: "border-box",
-    },
-    formHeading: {
-      fontSize: 22,
-      fontWeight: 600,
-      color: COLORS.white,
-      marginBottom: 6,
-      letterSpacing: 0.3,
-    },
-    formSub: { fontSize: 15, color: COLORS.silver, marginBottom: 24 },
-    formGroup: { display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 },
-    formLabel: {
-      fontSize: 10,
-      letterSpacing: 2,
-      textTransform: "uppercase",
-      color: COLORS.mist,
-    },
-    formInput: {
+    const inputStyle = {
       background: COLORS.graphite,
       border: `1px solid ${COLORS.border}`,
       color: COLORS.white,
-      padding: "14px 14px",
-      fontSize: 16,
+      padding: "16px 14px",
+      fontSize: 18,
       fontFamily: "'Barlow', sans-serif",
       outline: "none",
-      borderRadius: 2,
+      borderRadius: 4,
       width: "100%",
       boxSizing: "border-box",
-    },
-    submitBtn: {
-      width: "100%",
-      background: COLORS.gold,
-      color: COLORS.black,
-      border: "none",
-      padding: "18px",
-      fontSize: 14,
-      fontWeight: 700,
+    };
+
+    const labelStyle = {
+      fontSize: 11,
       letterSpacing: 2,
       textTransform: "uppercase",
-      cursor: "pointer",
-      borderRadius: 2,
-      marginTop: 8,
-    },
-    errorMsg: {
-      fontSize: 14,
-      color: "#e05252",
-      marginTop: 12,
-      textAlign: "center",
-      lineHeight: 1.5,
-    },
-    successBox: { textAlign: "center", padding: "16px 0" },
-    successCheck: {
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      width: 52,
-      height: 52,
-      borderRadius: "50%",
-      background: `${COLORS.gold}22`,
-      border: `1px solid ${COLORS.gold}`,
-      fontSize: 22,
-      color: COLORS.gold,
-      marginBottom: 16,
-    },
-    successTitle: {
-      fontSize: 20,
-      fontWeight: 600,
-      color: COLORS.white,
-      marginBottom: 10,
-    },
-    successText: {
-      fontSize: 16,
-      color: COLORS.silver,
-      lineHeight: 1.7,
-    },
-
-    // ── SIGNS SECTION ──────────────────────────────────────
-    signsSection: {
-      background: COLORS.charcoal,
-      borderTop: `1px solid ${COLORS.border}`,
-      padding: mobile ? "64px 20px" : "88px 48px",
-    },
-    signsHeading: {
-      fontFamily: "'Georgia', serif",
-      fontSize: mobile ? 30 : 42,
-      fontWeight: 700,
-      color: COLORS.white,
-      textAlign: "center",
-      lineHeight: 1.2,
-      margin: "0 auto 44px",
-      maxWidth: 700,
-    },
-    signsList: {
-      display: "flex",
-      flexDirection: "column",
-      gap: 18,
-      maxWidth: 640,
-      margin: "0 auto 40px",
-    },
-    signsItem: {
-      display: "flex",
-      alignItems: "flex-start",
-      gap: 14,
-      fontSize: mobile ? 18 : 20,
-      color: COLORS.white,
-      lineHeight: 1.5,
-    },
-    signsCheck: {
-      color: COLORS.gold,
-      fontSize: 22,
-      fontWeight: 700,
-      flexShrink: 0,
-      lineHeight: 1.4,
-    },
-    signsFooter: {
-      fontSize: mobile ? 17 : 19,
-      color: COLORS.silver,
-      lineHeight: 1.7,
-      textAlign: "center",
-      maxWidth: 640,
-      margin: "0 auto 36px",
-    },
-    signsBtn: {
-      display: "block",
-      background: COLORS.gold,
-      color: COLORS.black,
-      border: "none",
-      padding: "18px 48px",
-      fontSize: mobile ? 16 : 19,
-      fontWeight: 700,
-      letterSpacing: 2,
-      textTransform: "uppercase",
-      cursor: "pointer",
-      borderRadius: 2,
-      textDecoration: "none",
-      textAlign: "center",
-      maxWidth: 420,
-      margin: "0 auto",
-    },
-
-    // ── DIFFERENTIATION ──────────────────────────────────────
-    diffSection: {
-      background: COLORS.black,
-      padding: mobile ? "64px 20px" : "88px 48px",
-    },
-    diffHeading: {
-      fontFamily: "'Georgia', serif",
-      fontSize: mobile ? 30 : 42,
-      fontWeight: 700,
-      color: COLORS.white,
-      textAlign: "center",
-      lineHeight: 1.2,
-      margin: "0 auto 52px",
-      maxWidth: 700,
-    },
-    diffGrid: {
-      display: "grid",
-      gridTemplateColumns: mobile ? "1fr" : "1fr 1fr",
-      gap: 20,
-      maxWidth: 960,
-      margin: "0 auto",
-    },
-    diffCard: {
-      background: COLORS.charcoal,
-      border: `1px solid ${COLORS.border}`,
-      borderTop: `2px solid ${COLORS.gold}`,
-      borderRadius: 4,
-      overflow: "hidden",
-    },
-    diffImg: {
-      width: "100%",
-      height: 220,
-      objectFit: "cover",
-      display: "block",
-    },
-    diffCardBody: { padding: "24px 26px 28px" },
-    diffCardTitle: {
-      fontSize: mobile ? 18 : 20,
-      fontWeight: 600,
-      color: COLORS.white,
-      marginBottom: 10,
-    },
-    diffCardText: {
-      fontSize: mobile ? 17 : 18,
-      color: COLORS.silver,
-      lineHeight: 1.75,
-    },
-
-    // ── STORM DAMAGE ────────────────────────────────────────
-    stormSection: {
-      background: COLORS.graphite,
-      borderTop: `1px solid ${COLORS.border}`,
-      padding: mobile ? "64px 20px" : "88px 48px",
-      textAlign: "center",
-    },
-    stormHeading: {
-      fontFamily: "'Georgia', serif",
-      fontSize: mobile ? 28 : 38,
-      fontWeight: 700,
-      color: COLORS.white,
-      lineHeight: 1.2,
-      margin: "0 auto 20px",
-      maxWidth: 640,
-    },
-    stormText: {
-      fontSize: mobile ? 17 : 19,
-      color: COLORS.silver,
-      lineHeight: 1.75,
-      maxWidth: 640,
-      margin: "0 auto 36px",
-    },
-    stormBtn: {
-      display: "inline-block",
-      background: COLORS.gold,
-      color: COLORS.black,
-      border: "none",
-      padding: "18px 48px",
-      fontSize: mobile ? 16 : 19,
-      fontWeight: 700,
-      letterSpacing: 2,
-      textTransform: "uppercase",
-      cursor: "pointer",
-      borderRadius: 2,
-      textDecoration: "none",
-    },
-
-    // ── FINAL CTA ────────────────────────────────────────────
-    ctaSection: {
-      background: COLORS.charcoal,
-      borderTop: `1px solid ${COLORS.border}`,
-      padding: mobile ? "64px 20px" : "88px 48px",
-      textAlign: "center",
-    },
-    ctaHeading: {
-      fontFamily: "'Georgia', serif",
-      fontSize: mobile ? 30 : 42,
-      fontWeight: 700,
-      color: COLORS.white,
-      margin: "0 0 16px",
-      lineHeight: 1.2,
-    },
-    ctaSub: {
-      fontSize: mobile ? 17 : 19,
-      color: COLORS.silver,
-      lineHeight: 1.7,
-      margin: "0 auto 36px",
-      maxWidth: 560,
-    },
-    ctaBtn: {
-      display: "inline-block",
-      background: COLORS.gold,
-      color: COLORS.black,
-      border: "none",
-      padding: "18px 48px",
-      fontSize: mobile ? 16 : 19,
-      fontWeight: 700,
-      letterSpacing: 2,
-      textTransform: "uppercase",
-      cursor: "pointer",
-      borderRadius: 2,
-      textDecoration: "none",
-    },
-
-    // ── FOOTER ───────────────────────────────────────────────
-    footer: {
-      background: COLORS.black,
-      borderTop: `1px solid ${COLORS.border}`,
-      padding: "24px 48px",
-      textAlign: "center",
-      fontSize: 13,
       color: COLORS.mist,
-      letterSpacing: 1,
-    },
+      marginBottom: 4,
+    };
+
+    return (
+      <>
+        {/* Honeypot */}
+        <input
+          name="company"
+          value={form.company}
+          onChange={set("company")}
+          tabIndex={-1}
+          aria-hidden="true"
+          autoComplete="off"
+          style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}
+        />
+
+        <div style={{ marginBottom: 12 }}>
+          <div style={labelStyle}>Full Name *</div>
+          <input style={inputStyle} type="text" value={form.name} onChange={set("name")} placeholder="Jane Smith" />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <div style={labelStyle}>Phone *</div>
+          <input style={inputStyle} type="tel" value={form.phone} onChange={set("phone")} placeholder="(609) 555-0100" />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <div style={labelStyle}>Property Address</div>
+          <input style={inputStyle} type="text" value={form.address} onChange={set("address")} placeholder="123 Oak Ave, Cherry Hill, NJ" />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <div style={labelStyle}>Email (optional)</div>
+          <input style={inputStyle} type="email" value={form.email} onChange={set("email")} placeholder="jane@example.com" />
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          disabled={submitting}
+          style={{
+            width: "100%",
+            background: COLORS.gold,
+            color: COLORS.black,
+            border: "none",
+            padding: "20px",
+            fontSize: mobile ? 15 : 16,
+            fontWeight: 700,
+            letterSpacing: 1.5,
+            textTransform: "uppercase",
+            cursor: "pointer",
+            borderRadius: 4,
+            marginTop: 4,
+          }}
+        >
+          {submitting ? "Submitting\u2026" : "Claim My $250 Off + Free Inspection"}
+        </button>
+
+        {error && (
+          <div style={{ fontSize: 15, color: "#e05252", marginTop: 12, textAlign: "center", lineHeight: 1.5 }}>
+            {error}
+          </div>
+        )}
+      </>
+    );
   };
 
   const signs = [
@@ -466,223 +188,297 @@ export default function RoofInspection() {
   ];
 
   return (
-    <div style={s.page}>
+    <div style={{
+      background: COLORS.black,
+      color: COLORS.white,
+      fontFamily: "'Barlow', 'Helvetica Neue', sans-serif",
+      fontWeight: 300,
+    }}>
 
       {/* ── HERO ── */}
-      <section style={s.hero}>
-        <div style={s.topbar}>
-          <div>
-            <span style={s.logoNum}>42</span>
-            <span style={s.logoTxt}>Exteriors</span>
-          </div>
-          <div style={s.serviceArea}>NJ · DE · PA · MD</div>
-        </div>
+      <section style={{
+        position: "relative",
+        minHeight: mobile ? "auto" : "100vh",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+      }}>
+        {/* Background image */}
+        <img
+          src="/images/roof-finished.jpg"
+          alt=""
+          loading="eager"
+          style={{
+            position: "absolute", inset: 0, width: "100%", height: "100%",
+            objectFit: "cover", zIndex: 0,
+          }}
+        />
+        {/* Dark overlay */}
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 1,
+          background: "linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.72))",
+        }} />
 
-        <div style={s.heroBody}>
-          {/* Left: copy */}
-          <div style={s.heroLeft}>
-            <div style={s.pill}>Roof Over 15 Years Old?</div>
-            <h1 style={s.headline}>
-              Find out how many years your roof has left.
-            </h1>
-            <p style={s.subhead}>
-              A free, no-obligation honest inspection from a contractor who
-              builds roofs to last — not the cheapest bid.
-            </p>
-            <div style={s.bullets}>
-              {[
-                "Free & no pressure",
-                "Honest age report",
-                "Premium GAF materials & skilled crews",
-              ].map((b) => (
-                <div key={b} style={s.bullet}>
-                  <span style={s.checkmark}>&#10003;</span>
-                  <span>{b}</span>
-                </div>
-              ))}
-            </div>
+        {/* Content over image */}
+        <div style={{ position: "relative", zIndex: 2, padding: mobile ? "0 20px" : "0 48px", flex: 1, display: "flex", flexDirection: "column" }}>
+
+          {/* Wordmark */}
+          <div style={{
+            padding: mobile ? "18px 0" : "24px 0",
+            borderBottom: "1px solid rgba(255,255,255,0.1)",
+          }}>
+            <span style={{ fontFamily: "'Georgia', serif", fontSize: mobile ? 22 : 28, fontWeight: 700, color: COLORS.gold, letterSpacing: -1 }}>42</span>
+            <span style={{ fontSize: mobile ? 11 : 13, fontWeight: 600, letterSpacing: 4, color: COLORS.white, textTransform: "uppercase", paddingLeft: 6 }}>EXTERIORS</span>
           </div>
 
-          {/* Right: form card */}
-          <div style={s.formCard} id="form">
-            {success ? (
-              <div style={s.successBox}>
-                <div style={s.successCheck}>&#10003;</div>
-                <div style={s.successTitle}>Request received.</div>
-                <div style={s.successText}>
-                  Our team will reach out within one business day to schedule
-                  your free inspection. We look forward to taking care of
-                  your home.
-                </div>
+          {/* Hero body: copy + form */}
+          <div style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: mobile ? "column" : "row",
+            alignItems: mobile ? "stretch" : "center",
+            justifyContent: "center",
+            gap: mobile ? 28 : 56,
+            paddingTop: mobile ? 28 : 48,
+            paddingBottom: mobile ? 32 : 48,
+          }}>
+            {/* Left: copy */}
+            <div style={{ flex: 1, maxWidth: mobile ? "100%" : 540 }}>
+              {/* Offer badge */}
+              <div style={{
+                display: "inline-block",
+                background: COLORS.gold,
+                color: COLORS.black,
+                fontSize: mobile ? 14 : 16,
+                fontWeight: 800,
+                letterSpacing: 1,
+                padding: mobile ? "10px 18px" : "12px 24px",
+                borderRadius: 4,
+                marginBottom: 20,
+                lineHeight: 1.3,
+              }}>
+                $250 OFF YOUR NEW ROOF
+                <span style={{ display: "block", fontSize: mobile ? 11 : 12, fontWeight: 600, opacity: 0.85, marginTop: 2 }}>
+                  Celebrating America's 250th
+                </span>
               </div>
-            ) : (
-              <>
-                <div style={s.formHeading}>Get your free inspection</div>
-                <div style={s.formSub}>Takes 30 seconds. No obligation.</div>
 
-                {/* Honeypot — hidden from real users, catches bots */}
-                <input
-                  name="company"
-                  value={form.company}
-                  onChange={set("company")}
-                  tabIndex={-1}
-                  aria-hidden="true"
-                  autoComplete="off"
-                  style={{
-                    position: "absolute",
-                    left: "-9999px",
-                    width: 1,
-                    height: 1,
-                    overflow: "hidden",
-                  }}
-                />
+              <div style={{
+                fontSize: mobile ? 10 : 11,
+                color: COLORS.goldLight,
+                letterSpacing: 1.5,
+                textTransform: "uppercase",
+                marginBottom: 12,
+                fontWeight: 600,
+              }}>
+                Limited time. Book your free inspection to claim it.
+              </div>
 
-                <div style={s.formGroup}>
-                  <label style={s.formLabel}>Full Name *</label>
-                  <input
-                    style={s.formInput}
-                    type="text"
-                    value={form.name}
-                    onChange={set("name")}
-                    placeholder="Jane Smith"
-                  />
-                </div>
-                <div style={s.formGroup}>
-                  <label style={s.formLabel}>Phone</label>
-                  <input
-                    style={s.formInput}
-                    type="tel"
-                    value={form.phone}
-                    onChange={set("phone")}
-                    placeholder="(609) 555-0100"
-                  />
-                </div>
-                <div style={s.formGroup}>
-                  <label style={s.formLabel}>Property Address</label>
-                  <input
-                    style={s.formInput}
-                    type="text"
-                    value={form.address}
-                    onChange={set("address")}
-                    placeholder="123 Oak Ave, Cherry Hill, NJ"
-                  />
-                </div>
-                <div style={s.formGroup}>
-                  <label style={s.formLabel}>Email (optional)</label>
-                  <input
-                    style={s.formInput}
-                    type="email"
-                    value={form.email}
-                    onChange={set("email")}
-                    placeholder="jane@example.com"
-                  />
-                </div>
+              <h1 style={{
+                fontFamily: "'Georgia', serif",
+                fontSize: mobile ? "clamp(32px, 8vw, 44px)" : "clamp(40px, 4vw, 56px)",
+                fontWeight: 700,
+                color: COLORS.white,
+                lineHeight: 1.15,
+                margin: "0 0 20px",
+              }}>
+                Find out how many years your roof has left.
+              </h1>
 
-                <button
-                  style={s.submitBtn}
-                  onClick={handleSubmit}
-                  disabled={submitting}
-                >
-                  {submitting ? "Submitting\u2026" : "Book My Free Inspection \u2192"}
-                </button>
+              {/* 3 inline checkmarks */}
+              <div style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: mobile ? 8 : 16,
+                fontSize: mobile ? 15 : 17,
+                color: COLORS.white,
+                marginBottom: mobile ? 8 : 0,
+              }}>
+                {["Free inspection", "Honest age report", "Premium GAF materials"].map((t) => (
+                  <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
+                    <span style={{ color: COLORS.gold, fontWeight: 700 }}>&#10003;</span> {t}
+                  </span>
+                ))}
+              </div>
+            </div>
 
-                {error && <div style={s.errorMsg}>{error}</div>}
-              </>
-            )}
+            {/* Right: form */}
+            <div
+              id="form"
+              style={{
+                background: COLORS.charcoal,
+                border: `1px solid ${COLORS.gold}`,
+                borderRadius: 6,
+                padding: mobile ? "24px 20px" : "32px 28px",
+                width: mobile ? "100%" : 400,
+                flexShrink: 0,
+                boxSizing: "border-box",
+              }}
+            >
+              {renderForm()}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── SIGNS IT MAY BE TIME ── */}
-      <section style={s.signsSection}>
-        <h2 style={s.signsHeading}>Signs it may be time for a new roof</h2>
-        <div style={s.signsList}>
+      {/* ── TRUST ROW ── */}
+      <section style={{
+        background: COLORS.charcoal,
+        borderTop: `1px solid ${COLORS.border}`,
+        padding: mobile ? "40px 20px" : "52px 48px",
+      }}>
+        <div style={{
+          display: mobile ? "flex" : "grid",
+          flexDirection: "column",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          gap: mobile ? 28 : 32,
+          maxWidth: 1000,
+          margin: "0 auto",
+          alignItems: "start",
+        }}>
+          {/* Prop 1 with image */}
+          <div style={{ textAlign: "center" }}>
+            <img
+              src="/images/site-protection.jpg"
+              alt="Crew protecting property before roof removal"
+              loading="lazy"
+              style={{ width: "100%", maxWidth: 300, height: mobile ? 160 : 180, objectFit: "cover", borderRadius: 4, marginBottom: 14, display: "block", marginLeft: "auto", marginRight: "auto" }}
+            />
+            <div style={{ fontSize: mobile ? 17 : 19, fontWeight: 600, color: COLORS.white, marginBottom: 6 }}>
+              We protect your property first
+            </div>
+            <div style={{ fontSize: mobile ? 15 : 16, color: COLORS.silver, lineHeight: 1.6 }}>
+              Tarps, care, and cleanup — every job.
+            </div>
+          </div>
+
+          {/* Prop 2 with image */}
+          <div style={{ textAlign: "center" }}>
+            <img
+              src="/images/gaf-materials.jpg"
+              alt="GAF Timberline HD roofing materials"
+              loading="lazy"
+              style={{ width: "100%", maxWidth: 300, height: mobile ? 160 : 180, objectFit: "cover", borderRadius: 4, marginBottom: 14, display: "block", marginLeft: "auto", marginRight: "auto" }}
+            />
+            <div style={{ fontSize: mobile ? 17 : 19, fontWeight: 600, color: COLORS.white, marginBottom: 6 }}>
+              Premium GAF materials, built to last 20+ years
+            </div>
+            <div style={{ fontSize: mobile ? 15 : 16, color: COLORS.silver, lineHeight: 1.6 }}>
+              Quality shingles and underlayment — no shortcuts.
+            </div>
+          </div>
+
+          {/* Prop 3 text only */}
+          <div style={{ textAlign: "center", display: "flex", flexDirection: "column", justifyContent: "center", minHeight: mobile ? "auto" : 180 }}>
+            <div style={{ fontSize: mobile ? 40 : 48, color: COLORS.gold, marginBottom: 10 }}>&#9733;</div>
+            <div style={{ fontSize: mobile ? 17 : 19, fontWeight: 600, color: COLORS.white, marginBottom: 6 }}>
+              We don't chase volume
+            </div>
+            <div style={{ fontSize: mobile ? 15 : 16, color: COLORS.silver, lineHeight: 1.6 }}>
+              We build roofs that last. One crew, one job, done right.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SIGNS CHECKLIST ── */}
+      <section style={{
+        background: COLORS.black,
+        borderTop: `1px solid ${COLORS.border}`,
+        padding: mobile ? "40px 20px" : "52px 48px",
+      }}>
+        <h2 style={{
+          fontFamily: "'Georgia', serif",
+          fontSize: mobile ? 26 : 34,
+          fontWeight: 700,
+          color: COLORS.white,
+          textAlign: "center",
+          lineHeight: 1.2,
+          margin: "0 auto 28px",
+          maxWidth: 600,
+        }}>
+          Signs it may be time for a new roof
+        </h2>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 14,
+          maxWidth: 540,
+          margin: "0 auto",
+        }}>
           {signs.map((item) => (
-            <div key={item} style={s.signsItem}>
-              <span style={s.signsCheck}>&#10003;</span>
+            <div key={item} style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              fontSize: mobile ? 17 : 19,
+              color: COLORS.white,
+              lineHeight: 1.4,
+            }}>
+              <span style={{ color: COLORS.gold, fontSize: 20, fontWeight: 700, flexShrink: 0 }}>&#10003;</span>
               <span>{item}</span>
             </div>
           ))}
         </div>
-        <p style={s.signsFooter}>
-          Notice any of these? A free inspection tells you exactly where your
-          roof stands — no pressure, no obligation.
-        </p>
-        <a href="#form" style={s.signsBtn}>
-          Book My Free Inspection &rarr;
-        </a>
-      </section>
-
-      {/* ── DIFFERENTIATION ── */}
-      <section style={s.diffSection}>
-        <h2 style={s.diffHeading}>
-          We don't chase volume. We build roofs that last.
-        </h2>
-        <div style={s.diffGrid}>
-          <div style={s.diffCard}>
-            <img
-              src="/images/site-protection.jpg"
-              alt="Crew protecting property before roof removal"
-              style={s.diffImg}
-            />
-            <div style={s.diffCardBody}>
-              <div style={s.diffCardTitle}>We protect your property first</div>
-              <div style={s.diffCardText}>
-                Tarps shield your siding, landscaping, and yard before a single
-                shingle comes off. Most roofers leave a mess — we treat your
-                home the way we'd treat our own.
-              </div>
-            </div>
-          </div>
-          <div style={s.diffCard}>
-            <img
-              src="/images/gaf-materials.jpg"
-              alt="GAF Timberline HD roofing materials"
-              style={s.diffImg}
-            />
-            <div style={s.diffCardBody}>
-              <div style={s.diffCardTitle}>Premium GAF materials</div>
-              <div style={s.diffCardText}>
-                GAF Timberline HD shingles, quality underlayment, and skilled
-                crews — built to last 20+ years. We don't cut corners on the
-                materials that protect everything underneath.
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* ── STORM DAMAGE ── */}
-      <section style={s.stormSection}>
-        <h2 style={s.stormHeading}>
-          Think a recent storm may have caused damage?
+      <section style={{
+        background: COLORS.graphite,
+        borderTop: `1px solid ${COLORS.border}`,
+        padding: mobile ? "36px 20px" : "48px 48px",
+        textAlign: "center",
+      }}>
+        <h2 style={{
+          fontFamily: "'Georgia', serif",
+          fontSize: mobile ? 24 : 30,
+          fontWeight: 700,
+          color: COLORS.white,
+          lineHeight: 1.2,
+          margin: "0 auto 14px",
+          maxWidth: 600,
+        }}>
+          Think a storm caused damage?
         </h2>
-        <p style={s.stormText}>
-          Let's identify it. Book a free inspection and we'll show you exactly
-          what we find and how severe it is. As your contractor, we restore your
-          property based on what your insurance approves.
+        <p style={{
+          fontSize: mobile ? 16 : 18,
+          color: COLORS.silver,
+          lineHeight: 1.7,
+          maxWidth: 600,
+          margin: "0 auto 24px",
+        }}>
+          Let's identify it — book a free inspection and we'll show you what we find.
+          As your contractor, we restore your property based on what your insurance approves.
         </p>
-        <a href="#form" style={s.stormBtn}>
-          Book My Free Inspection &rarr;
-        </a>
-      </section>
-
-      {/* ── FINAL CTA ── */}
-      <section style={s.ctaSection}>
-        <h2 style={s.ctaHeading}>
-          Not sure how much life your roof has left?
-        </h2>
-        <p style={s.ctaSub}>
-          Get an honest answer from a contractor who'll tell you the truth —
-          even if it means you don't need a new roof yet.
-        </p>
-        <a href="#form" style={s.ctaBtn}>
-          Book My Free Inspection &rarr;
-        </a>
+        <button
+          onClick={scrollToForm}
+          style={{
+            background: COLORS.gold,
+            color: COLORS.black,
+            border: "none",
+            padding: "18px 40px",
+            fontSize: mobile ? 15 : 17,
+            fontWeight: 700,
+            letterSpacing: 1.5,
+            textTransform: "uppercase",
+            cursor: "pointer",
+            borderRadius: 4,
+          }}
+        >
+          Claim My $250 Off + Free Inspection
+        </button>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={s.footer}>
+      <footer style={{
+        background: COLORS.black,
+        borderTop: `1px solid ${COLORS.border}`,
+        padding: "20px 24px",
+        textAlign: "center",
+        fontSize: 13,
+        color: COLORS.mist,
+        letterSpacing: 1,
+      }}>
         42 Exteriors &middot; Roofing &amp; Exterior Contracting &middot; NJ &middot; DE &middot; PA &middot; MD
       </footer>
 
