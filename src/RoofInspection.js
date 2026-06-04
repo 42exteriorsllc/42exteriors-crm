@@ -14,6 +14,9 @@ const COLORS = {
   goldLight: "#e8c97a",
 };
 
+const STICKY_HEIGHT_MOBILE = 52;
+const STICKY_HEIGHT_DESKTOP = 48;
+
 export default function RoofInspection() {
   const [form, setForm] = useState({ name: "", phone: "", address: "", company: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -176,6 +179,8 @@ export default function RoofInspection() {
     "Leaks or ceiling stains inside the home",
   ];
 
+  const stickyH = mobile ? STICKY_HEIGHT_MOBILE : STICKY_HEIGHT_DESKTOP;
+
   return (
     <div style={{
       background: COLORS.black,
@@ -184,10 +189,48 @@ export default function RoofInspection() {
       fontWeight: 300,
     }}>
 
+      {/* ── STICKY OFFER BAR ── */}
+      <div
+        onClick={scrollToForm}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          background: COLORS.gold,
+          color: COLORS.black,
+          textAlign: "center",
+          padding: mobile ? "14px 16px" : "12px 24px",
+          cursor: "pointer",
+          boxShadow: "0 2px 12px rgba(201,168,76,0.35)",
+        }}
+      >
+        <div style={{
+          fontSize: mobile ? 15 : 20,
+          fontWeight: 800,
+          letterSpacing: mobile ? 0.5 : 1.5,
+          lineHeight: 1.3,
+        }}>
+          &#9728; SUMMER SPECIAL — UP TO $1,500 OFF A NEW ROOF
+        </div>
+        <div style={{
+          fontSize: mobile ? 11 : 12,
+          fontWeight: 600,
+          opacity: 0.7,
+          marginTop: 2,
+        }}>
+          Tap to claim your savings &#8594;
+        </div>
+      </div>
+
+      {/* Spacer so sticky bar doesn't cover content */}
+      <div style={{ height: stickyH }} />
+
       {/* ── HERO ── */}
       <section style={{
         position: "relative",
-        minHeight: mobile ? "auto" : "100vh",
+        minHeight: mobile ? "auto" : `calc(100vh - ${stickyH}px)`,
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
@@ -233,29 +276,79 @@ export default function RoofInspection() {
           }}>
             {/* Left: copy */}
             <div style={{ flex: 1, maxWidth: mobile ? "100%" : 540 }}>
-              {/* Offer badge */}
+              {/* Big offer treatment with warm glow */}
               <div style={{
-                display: "inline-block",
-                background: COLORS.gold,
-                color: COLORS.black,
-                fontSize: mobile ? 14 : 16,
-                fontWeight: 800,
-                letterSpacing: 1,
-                padding: mobile ? "10px 18px" : "12px 24px",
-                borderRadius: 4,
-                marginBottom: 8,
-                lineHeight: 1.3,
-              }}>
-                SUMMER SPECIAL — UP TO $1,500 OFF A BRAND NEW ROOF
-              </div>
-
-              <div style={{
-                fontSize: mobile ? 14 : 15,
-                color: COLORS.goldLight,
+                position: "relative",
                 marginBottom: 20,
-                fontWeight: 500,
               }}>
-                Fill out the form to find your savings.
+                {/* Warm gold glow behind the offer */}
+                <div style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: mobile ? "30%" : "25%",
+                  width: mobile ? 180 : 280,
+                  height: mobile ? 100 : 140,
+                  transform: "translate(-50%, -50%)",
+                  background: `radial-gradient(ellipse, ${COLORS.gold}18 0%, transparent 70%)`,
+                  pointerEvents: "none",
+                  zIndex: 0,
+                }} />
+
+                <div style={{ position: "relative", zIndex: 1 }}>
+                  <div style={{
+                    fontSize: mobile ? 13 : 15,
+                    fontWeight: 700,
+                    letterSpacing: 2,
+                    textTransform: "uppercase",
+                    color: COLORS.goldLight,
+                    marginBottom: 6,
+                  }}>
+                    &#9728; Summer Special
+                  </div>
+
+                  <div style={{
+                    fontSize: mobile ? 38 : 52,
+                    fontWeight: 900,
+                    fontFamily: "'Georgia', serif",
+                    color: COLORS.gold,
+                    lineHeight: 1.05,
+                    letterSpacing: -1,
+                    marginBottom: 4,
+                    textShadow: `0 0 40px ${COLORS.gold}33`,
+                  }}>
+                    UP TO $1,500 OFF
+                  </div>
+
+                  <div style={{
+                    fontSize: mobile ? 16 : 20,
+                    fontWeight: 700,
+                    color: COLORS.white,
+                    letterSpacing: 1,
+                    textTransform: "uppercase",
+                    marginBottom: 6,
+                  }}>
+                    A Brand New Roof
+                  </div>
+
+                  <div style={{
+                    fontSize: mobile ? 13 : 14,
+                    color: COLORS.goldLight,
+                    fontWeight: 500,
+                    marginBottom: 4,
+                  }}>
+                    Fill out the form to find your savings.
+                  </div>
+
+                  <div style={{
+                    fontSize: mobile ? 11 : 12,
+                    color: COLORS.silver,
+                    fontWeight: 600,
+                    letterSpacing: 1,
+                    textTransform: "uppercase",
+                  }}>
+                    Limited time — summer 2026 only
+                  </div>
+                </div>
               </div>
 
               <h1 style={{
@@ -306,6 +399,7 @@ export default function RoofInspection() {
                 width: mobile ? "100%" : 400,
                 flexShrink: 0,
                 boxSizing: "border-box",
+                boxShadow: `0 0 30px ${COLORS.gold}15`,
               }}
             >
               {renderForm()}
