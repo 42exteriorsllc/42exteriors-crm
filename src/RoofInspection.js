@@ -14,8 +14,8 @@ const COLORS = {
   goldLight: "#e8c97a",
 };
 
-const STICKY_HEIGHT_MOBILE = 52;
-const STICKY_HEIGHT_DESKTOP = 48;
+const STICKY_HEIGHT_MOBILE = 72;
+const STICKY_HEIGHT_DESKTOP = 52;
 
 export default function RoofInspection() {
   const [form, setForm] = useState({ name: "", phone: "", address: "", company: "" });
