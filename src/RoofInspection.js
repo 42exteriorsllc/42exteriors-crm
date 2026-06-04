@@ -15,7 +15,7 @@ const COLORS = {
 };
 
 export default function RoofInspection() {
-  const [form, setForm] = useState({ name: "", phone: "", address: "", email: "", company: "" });
+  const [form, setForm] = useState({ name: "", phone: "", address: "", company: "" });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -36,15 +36,9 @@ export default function RoofInspection() {
     // Validate name
     if (!form.name.trim()) { setError("Please enter your full name."); return; }
 
-    // Validate phone/email — need at least one
+    // Validate phone (required)
     const digits = form.phone.replace(/\D/g, "");
-    const hasPhone = form.phone.trim().length > 0;
-    const hasEmail = form.email.trim().length > 0;
-    if (!hasPhone && !hasEmail) {
-      setError("Please enter a phone number or email so we can reach you.");
-      return;
-    }
-    if (hasPhone && digits.length < 10) {
+    if (digits.length < 10) {
       setError("Please enter a valid 10-digit phone number.");
       return;
     }
@@ -58,7 +52,7 @@ export default function RoofInspection() {
       division: "Retail",
       name:     form.name.trim(),
       phone:    digits || null,
-      email:    form.email.trim() || null,
+      email:    null,
       address:  form.address.trim() || null,
       notes:    "Captured from Meta landing page (/lp/roof-inspection) on " + new Date().toISOString(),
     }]);
@@ -144,11 +138,6 @@ export default function RoofInspection() {
           <div style={labelStyle}>Property Address</div>
           <input style={inputStyle} type="text" value={form.address} onChange={set("address")} placeholder="123 Oak Ave, Cherry Hill, NJ" />
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <div style={labelStyle}>Email (optional)</div>
-          <input style={inputStyle} type="email" value={form.email} onChange={set("email")} placeholder="jane@example.com" />
-        </div>
-
         <button
           onClick={handleSubmit}
           disabled={submitting}
@@ -167,7 +156,7 @@ export default function RoofInspection() {
             marginTop: 4,
           }}
         >
-          {submitting ? "Submitting\u2026" : "Claim My $250 Off + Free Inspection"}
+          {submitting ? "Submitting\u2026" : "Find My Savings"}
         </button>
 
         {error && (
@@ -254,24 +243,19 @@ export default function RoofInspection() {
                 letterSpacing: 1,
                 padding: mobile ? "10px 18px" : "12px 24px",
                 borderRadius: 4,
-                marginBottom: 20,
+                marginBottom: 8,
                 lineHeight: 1.3,
               }}>
-                $250 OFF YOUR NEW ROOF
-                <span style={{ display: "block", fontSize: mobile ? 11 : 12, fontWeight: 600, opacity: 0.85, marginTop: 2 }}>
-                  Celebrating America's 250th
-                </span>
+                SUMMER SPECIAL — UP TO $1,500 OFF A BRAND NEW ROOF
               </div>
 
               <div style={{
-                fontSize: mobile ? 10 : 11,
+                fontSize: mobile ? 14 : 15,
                 color: COLORS.goldLight,
-                letterSpacing: 1.5,
-                textTransform: "uppercase",
-                marginBottom: 12,
-                fontWeight: 600,
+                marginBottom: 20,
+                fontWeight: 500,
               }}>
-                Limited time. Book your free inspection to claim it.
+                Fill out the form to find your savings.
               </div>
 
               <h1 style={{
@@ -280,10 +264,19 @@ export default function RoofInspection() {
                 fontWeight: 700,
                 color: COLORS.white,
                 lineHeight: 1.15,
+                margin: "0 0 14px",
+              }}>
+                Find Out How Much You Can Save on a New Roof
+              </h1>
+
+              <p style={{
+                fontSize: mobile ? 16 : 18,
+                color: COLORS.silver,
+                lineHeight: 1.6,
                 margin: "0 0 20px",
               }}>
-                Find out how many years your roof has left.
-              </h1>
+                A free, no-obligation inspection from a contractor who builds roofs to last — not the cheapest bid.
+              </p>
 
               {/* 3 inline checkmarks */}
               <div style={{
@@ -465,7 +458,7 @@ export default function RoofInspection() {
             borderRadius: 4,
           }}
         >
-          Claim My $250 Off + Free Inspection
+          Find My Savings
         </button>
       </section>
 
